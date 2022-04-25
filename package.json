@@ -7,17 +7,12 @@
     "start": "nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/afroneko/program-4-share-a-meal.git"
-  },
   "author": "Lisa",
   "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/afroneko/program-4-share-a-meal/issues"
-  },
-  "homepage": "https://gitlab.com/afroneko/program-4-share-a-meal#readme",
   "devDependencies": {
     "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
   }
 }
