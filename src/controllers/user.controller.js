@@ -12,11 +12,11 @@ let controller = {
       assert(typeof emailAdress === 'string', 'email must be a string')
       next()
     } catch (err) {
-      console.log(err)
-      res.status(400).json({
+      const error = {
         status: 400,
-        result: err.toString(),
-      })
+        result: err.message,
+      }
+      next(error)
     }
   },
 
@@ -52,7 +52,7 @@ let controller = {
     })
   },
 
-  getUserById: (req, res) => {
+  getUserById: (req, res, next) => {
     const userId = req.params.userId
     console.log(`User met ID ${userId} gezocht`)
     let user = database.filter((item) => item.id == userId)
@@ -63,10 +63,11 @@ let controller = {
         result: user,
       })
     } else {
-      res.status(404).json({
+      const error = {
         status: 404,
         result: `User with ID ${userId} not found`,
-      })
+      }
+      next(error)
     }
   },
 }
