@@ -7,7 +7,7 @@ let controller = {
     let user = req.body
     let { firstName, lastName, emailAdress, password } = user
     try {
-      assert(typeof firstName === 'string', 'first name must be a string')
+      assert(typeof firstName === 'string', 'first name must be a string!')
       assert(typeof lastName === 'string', 'last name must be a string')
       assert(typeof emailAdress === 'string', 'email must be a string')
       next()
