@@ -27,28 +27,7 @@ router.get('api/user/profile', (req, res, next) => {
 router.get('/api/user/:userId', userController.getUserById)
 
 //#UC-205 Update a single user
-router.put('api/user/:userID', (req, res, next) => {
-  const userID = req.params.userID
-  let userList = database.filter((item) => item.id == userID)
-  if (userList.length > 0) {
-    console.log(userList)
-    let user = req.body
-    user = {
-      id,
-      ...user,
-    }
-    database[database.indexOf(userList[0])] = user
-    res.status(201).json({
-      status: 201,
-      result: `User with ID ${userID} is updated`,
-    })
-  } else {
-    res.status(401).json({
-      status: 401,
-      result: `You are not authorized`,
-    })
-  }
-})
+router.put('api/user/:userID', userController.updateSingleUser)
 
 //#UC-206 Delete a user
 router.delete('api/user/:userID', (req, res, next) => {
