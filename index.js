@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
+// const database = require('./database/inmemdb')
 const userRouter = require('./src/routes/user.routes')
 
 app.use(bodyParser.json())
@@ -14,7 +15,7 @@ app.all('*', (req, res, next) => {
 
 //Router moet hier omdat als het pad niet gevonden kan worden,
 //Hij door gaat naar de route hieronder "end-point not found"
-app.use(userRouter)
+app.use('/api', userRouter)
 
 app.all('*', (req, res) => {
   res.status(401).json({

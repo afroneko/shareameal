@@ -1,23 +1,35 @@
 const assert = require('assert')
-let database = []
-let id = 0
+const database = require('../../database/inmemdb')
+const dbconnection = require('../../database/dbconnection')
 
 let controller = {
-  validateUser: (req, res, next) => {
-    let user = req.body
-    let { firstName, lastName, emailAdress, password } = user
-    try {
-      assert(typeof firstName === 'string', 'first name must be a string!')
-      assert(typeof lastName === 'string', 'last name must be a string')
-      assert(typeof emailAdress === 'string', 'email must be a string')
-      next()
-    } catch (err) {
-      const error = {
-        status: 400,
-        result: err.message,
+  /**
+   * We exporteren hier een object. Dat object heeft attributen met een waarde.
+   * Die waarde kan een string, number, boolean, array, maar ook een functie zijn.
+   * In dit geval zijn de attributen functies.
+   */
+  // createMovie is een attribuut dat als waarde een functie heeft.
+  createMovie: (req, res, next) => {
+    // Hier gebruiken we nu de inmem database module om een movie toe te voegen.
+    // Optie: check vooraf of req.body wel de juiste properties/attribute bevat - gaan we later doen
+
+    // We geven in de createMovie functie de callbackfunctie mee. Die kan een error of een result teruggeven.
+    database.createMovie(req.body, (error, result) => {
+      if (error) {
+        console.log(`index.js : ${error}`)
+        res.status(401).json({
+          statusCode: 401,
+          error, // als de key en de value hetzelfde zijn kun je die zo vermelden. Hier staat eigenlijk: error: error
+        })
       }
-      next(error)
-    }
+      if (result) {
+        console.log(`index.js: movie successfully added!`)
+        res.status(200).json({
+          statusCode: 200,
+          result,
+        })
+      }
+    })
   },
 
   addUser: (req, res) => {
@@ -91,6 +103,23 @@ let controller = {
         status: 401,
         result: `You are not authorized`,
       })
+    }
+  },
+
+  validateUser: (req, res, next) => {
+    let user = req.body
+    let { firstName, lastName, emailAdress, password } = user
+    try {
+      assert(typeof firstName === 'string', 'first name must be a string!')
+      assert(typeof lastName === 'string', 'last name must be a string')
+      assert(typeof emailAdress === 'string', 'email must be a string')
+      next()
+    } catch (err) {
+      const error = {
+        status: 400,
+        result: err.message,
+      }
+      next(error)
     }
   },
 }

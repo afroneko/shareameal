@@ -10,13 +10,13 @@ router.get('/', (req, res) => {
 })
 
 //#UC-201 Register as a new user
-router.post('/api/user', userController.validateUser, userController.addUser)
+router.post('/user', userController.validateUser, userController.addUser)
 
 //#UC-202 get all users
-router.get('/api/user', userController.getAllUsers)
+router.get('/user', userController.getAllUsers)
 
 //#UC-203 Request personal user profile
-router.get('api/user/profile', (req, res, next) => {
+router.get('/user/profile', (req, res, next) => {
   res.status(501).json({
     status: 501,
     result: 'This service is not yet available.',
@@ -24,13 +24,13 @@ router.get('api/user/profile', (req, res, next) => {
 })
 
 //#UC-204 get single user by ID
-router.get('/api/user/:userId', userController.getUserById)
+router.get('/user/:userId', userController.getUserById)
 
 //#UC-205 Update a single user
-router.put('api/user/:userID', userController.updateSingleUser)
+router.put('/user/:userID', userController.updateSingleUser)
 
 //#UC-206 Delete a user
-router.delete('api/user/:userID', (req, res, next) => {
+router.delete('/user/:userID', (req, res, next) => {
   const userID = req.params.userID
   let userList = database.filter((item) => item.id == userID)
   if (userList.length > 0) {
